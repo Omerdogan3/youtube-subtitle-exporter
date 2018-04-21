@@ -25,12 +25,10 @@ module.exports = textImporter = async(link) =>{
 
     const data = await page.evaluate(()=>{
         const tds =  Array.from(document.querySelectorAll('.style-scope ytd-transcript-renderer'));
-        return tds.map((td) => td.textContent)
+        return tds.map((td) => td.textContent.replace(/\s\s+/g, ' '));
     });
-    console.log(data);
-
     await page.close();
-
+    await browser.close();
     return data;
 }
 

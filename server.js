@@ -8,7 +8,6 @@ app.get('/:query', (req, res) => {
   textImporter(req.params.query).then((result)=>{
     res.send({ express: result });
   });
-  
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

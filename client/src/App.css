@@ -23,7 +23,12 @@
 }
 
 .container {
-  width: 80%;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.youtube-link-field{
+  text-align: center;
 }
 
 @keyframes App-logo-spin {
