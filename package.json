@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "client": "cd client && yarn start",
+    "client": "cd client && npm run start",
     "server": "nodemon server.js",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
