@@ -10,7 +10,7 @@
   "scripts": {
     "client": "cd client && yarn start",
     "server": "nodemon server.js",
-    "start": "concurrently \"yarn server\" \"yarn client\""
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
     "express": "^4.16.3",
