@@ -9,14 +9,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 
-
 import './App.css';
-/**
- * Horizontal steppers are ideal when the contents of one step depend on an earlier step.
- * Avoid using long step names in horizontal steppers.
- *
- * Linear steppers require users to complete one step in order to move on to the next.
- */
+
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
     super(props);
@@ -184,71 +178,3 @@ class HorizontalLinearStepper extends React.Component {
 }
 
 export default HorizontalLinearStepper;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { Component } from 'react';
-// import RaisedButton from 'material-ui/RaisedButton';
-// import LinearProgress from 'material-ui/CircularProgress';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
-// import logo from './logo.svg';
-
-// import './App.css';
-
-// class App extends Component {
-//   state = {
-//     response: ''
-//   };
-
-//   componentDidMount() {
-//     this.callApi()
-//       .then(res => this.setState({ response: res.express }))
-//       .catch(err => console.log(err));
-//   }
-
-//   callApi = async () => {
-//     const response = await fetch('a3W1I2_B6GA');
-//     const body = await response.json();
-
-//     if (response.status !== 200) throw Error(body.message);
-
-//     return body;
-//   };
-
-//   render() {
-//     return (
-//       <MuiThemeProvider className="App">
-//         <header className="App-header">
-//           <LinearProgress mode="indeterminate" />
-//           <h1 className="App-title">Export Sublitles From Youtube Videos</h1>
-//         </header>
-//           <div className="container">
-//           <p className="App-intro">{this.state.response}</p>
-//           <RaisedButton label="Export" fullWidth={true} />
-//         </div>
-//       </MuiThemeProvider>
-//     );
-//   }
-// }
-
-// export default App;
