@@ -8,8 +8,34 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import Dialog from 'material-ui/Dialog';
+import LinearProgress from 'material-ui/LinearProgress';
+import Paper from 'material-ui/Paper';
 
 import './App.css';
+
+const dialogStyle = {
+  width: '50%',
+  maxWidth: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'  
+};
+
+const loaderStyle = {
+  width: '60%'
+};
+
+const paperStyle = {
+  height: 'auto',
+  width: 'auto',
+  margin: 20,
+  textAlign: 'center',
+  padding: 10,
+  margin: 'auto'
+};
+
+
 
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
@@ -19,32 +45,69 @@ class HorizontalLinearStepper extends React.Component {
       stepIndex: 0,
       response: '',
       inputValue: '',
+      videoName: 'null',
       disabledButton: true,
-      hintText: "https://www.youtube.com/watch?v=0RkbkRXtqWc"
+      hintText: "https://www.youtube.com/watch?v=0RkbkRXtqWc",
+      openDialog: false,
+      completed: 1
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => this.progress(5), 1000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  resetProgress(){
+    this.setState({ 
+      completed: 1
+    });
+  }
+
+  progress(completed) {
+    if (completed > 100) {
+      this.setState({completed: 100});
+    } else {
+      this.setState({completed});
+      const diff = Math.random() * 10;
+      this.timer = setTimeout(() => this.progress(completed + diff), 1000);
+    }
   }
   
   handleNext = () => {
     const {stepIndex} = this.state;
-
+    this.resetProgress()
     if(stepIndex === 0){
       this.callApi(this.state.inputValue)
-      .then(res => this.setState({ 
+      .then(res => res.express === "error" ? this.handleOpen() : this.setState({ 
         response: res.express,
-        disabledButton:false
+        videoName: res.videoName,
+        disabledButton:false,
+        completed: 100
       }))
-      .catch(err => console.log(err));
+      .catch(err => this.handleOpen());
     }
 
     if(stepIndex === 2){
-      this.download("hello.txt",this.state.response);
+      this.download(this.state.videoName,this.state.response);
     }
 
     this.setState({
       stepIndex: stepIndex + 1,
       finished: stepIndex >= 2,
     });
+  };
+
+  handleOpen = () => {
+    this.setState({openDialog: true});
+  };
+
+  handleClose = () => {
+    this.setState({openDialog: false});
   };
 
   handlePrev = () => {
@@ -122,6 +185,17 @@ class HorizontalLinearStepper extends React.Component {
   render() {
     const {finished, stepIndex} = this.state;
     const contentStyle = {margin: '0 16px'};
+    const actions = [
+      <RaisedButton
+        href="#"
+        label="Try Again"
+        secondary={true}
+        onClick={(event) => {
+          event.preventDefault();
+          this.setState({stepIndex: 0, finished: false, disabledButton:true, response: '' , openDialog: false});
+        }}
+      />
+    ];
 
     return (
       <MuiThemeProvider style={{width: '100%', margin: 'auto'}}>
@@ -170,8 +244,32 @@ class HorizontalLinearStepper extends React.Component {
             </div>
           )}
         </div>
-        <p>{this.state.response}</p>
         </div>
+        <Dialog
+          open={this.state.openDialog}
+          actions={actions}
+          contentStyle={dialogStyle}
+          >
+            Error occured when we try to get subtitles.
+            
+          </Dialog>
+          <div className="loader-style">
+          {
+            (this.state.stepIndex === 1) ? <LinearProgress style={loaderStyle} mode="determinate" value={this.state.completed} /> : ""            
+          }
+
+          
+            
+          </div> 
+          <div> {this.state.response !== '' ?
+            <Paper style={paperStyle} zDepth={2}>
+              <h3>Output</h3>
+              <p>{this.state.response}</p>
+            </Paper>
+          : 
+          ''}
+            
+          </div>
       </MuiThemeProvider>
     );
   }

@@ -6,7 +6,10 @@ const textImporter = require('./youtube/textImporter');
 
 app.get('/:query', (req, res) => {
   textImporter(req.params.query).then((result)=>{
-    res.send({ express: result });
+    res.send({ 
+      express: result.data,
+      videoName: result.videoName
+    });
   });
 });
 
