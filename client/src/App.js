@@ -28,14 +28,12 @@ const loaderStyle = {
 
 const paperStyle = {
   height: 'auto',
-  width: 'auto',
+  width: '600px',
   margin: 20,
   textAlign: 'center',
   padding: 10,
   margin: 'auto'
 };
-
-
 
 class HorizontalLinearStepper extends React.Component {
   constructor(props){
@@ -113,7 +111,7 @@ class HorizontalLinearStepper extends React.Component {
   handlePrev = () => {
     const {stepIndex} = this.state;
     if (stepIndex > 0) {
-      this.setState({stepIndex: stepIndex - 1});
+      this.setState({stepIndex: stepIndex - 1, response: ''});
     }
   };
 
