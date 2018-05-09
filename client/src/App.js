@@ -50,6 +50,7 @@ class HorizontalLinearStepper extends React.Component {
       completed: 1
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onEnterPress = this.onEnterPress.bind(this);
   }
 
   componentDidMount() {
@@ -169,6 +170,7 @@ class HorizontalLinearStepper extends React.Component {
         hintText={this.state.hintText}
         onChange={this.handleChange}
         value={this.state.inputValue}
+        onKeyDown={this.onEnterPress}
       />;
         
       case 1:
@@ -177,6 +179,14 @@ class HorizontalLinearStepper extends React.Component {
         return 'Your file is ready!';
       default:
         return 'Null';
+    }
+  }
+
+  onEnterPress = (e) => {
+    if(e.keyCode == 13 && e.shiftKey == false) {
+      console.log("Enter!");
+      e.preventDefault();
+      this.handleNext();
     }
   }
 
