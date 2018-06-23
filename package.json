@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "client": "cd client && npm run start",
-    "server": "nodemon server.js",
+    "server": "node server.js",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
